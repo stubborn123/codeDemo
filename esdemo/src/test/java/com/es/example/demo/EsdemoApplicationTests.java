@@ -154,11 +154,11 @@ class EsdemoApplicationTests {
         request.timeout("10s");
 
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User("kuangshen1", 21));
-        users.add(new User("kuangshen2", 22));
-        users.add(new User("kuangshen3", 23));
-        users.add(new User("xiaofan1", 18));
-        users.add(new User("xiaofan2", 19));
+        users.add(new User("张三", 21));
+        users.add(new User("李四", 22));
+        users.add(new User("王二麻子", 23));
+        users.add(new User("王五", 18));
+        users.add(new User("赵六", 19));
 
         // 批处理请求， 修改，删除，只要在这里修改相应的请求就可以
         for (int i = 0; i < users.size(); i++) {
@@ -182,7 +182,8 @@ class EsdemoApplicationTests {
         // 查询条件， 可以使用QueryBuilders工具类实现
         // QueryBuilders.termQuery 精确
         // QueryBuilders.matchLLQuery() 匹配所有
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("name", "kuangshen1");
+        //这里name是keyword，不会分词(和你put进去没有指定类型是text)。但是知己term查name查不到，只能查的是name.keyword
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("name.keyword", "张三");
         // MatchAllQueryBuilder matchAllQueryBuilder = QueryBuilders.matchAllQuery();
         sourceBuilder.query(termQueryBuilder);
         sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
